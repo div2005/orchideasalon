@@ -15,10 +15,4 @@ public class ServiceModel
     
     [DisplayName("Ціна від")]
     public decimal Price { get; set; }
-    
-    [DisplayName("Тривалість")]
-    public int Duration { get; set; }
-    
-    [DisplayName("Посилання на зображення")]
-    public string Image { get; set; } = "";
 }

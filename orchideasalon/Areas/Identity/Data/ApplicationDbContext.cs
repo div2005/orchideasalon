@@ -1,36 +1,39 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using orchideasalon.Areas.Identity.Data;
-using orchideasalon.Controllers;
 using orchideasalon.Models;
 
 namespace orchideasalon.Data;
 
-public class AuthDbContext : IdentityDbContext<User>
+public class ApplicationDbContext : IdentityDbContext<User>
 {
-    public AuthDbContext(DbContextOptions<AuthDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
         Database.EnsureCreated();
     }
     
-    public AuthDbContext()
+    public ApplicationDbContext()
     {
     }
     
     public DbSet<ServiceModel> Services { get; set; }
     public DbSet<RegistrationModel> Registrations { get; set; }
-    public DbSet<WorkingDayModel> WorkingDays { get; set; }
     
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        new AuthDbInitializer(builder).Seed();
+        new ApplicationDbInitializer(builder).Seed();
+        
         builder.Entity<ServiceModel>().ToTable("Services");
-        builder.Entity<RegistrationModel>().ToTable("Registrations");
-        builder.Entity<WorkingDayModel>().ToTable("WorkingDays");
+        
+        builder.Entity<RegistrationModel>()
+            .ToTable("Registrations")
+            .HasOne(r => r.Service)
+            .WithMany()
+            .HasForeignKey(r => r.ServiceId)
+            .IsRequired(false);
         
     }
 }

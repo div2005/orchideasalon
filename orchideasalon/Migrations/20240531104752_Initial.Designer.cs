@@ -11,16 +11,16 @@ using orchideasalon.Data;
 
 namespace orchideasalon.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
-    [Migration("20240526131354_Added data to seed")]
-    partial class Addeddatatoseed
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20240531104752_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -53,13 +53,13 @@ namespace orchideasalon.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b7fa2cc2-b102-41c1-91c0-27a5153e900a",
+                            Id = "bf06e803-4e5c-41c4-a1ab-aae84d9629ca",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "4138b228-eee1-458d-b9a3-15a4bb1c4bb6",
+                            Id = "c35d7080-f89e-40ad-9bbb-684c90e913ab",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         });
@@ -156,8 +156,8 @@ namespace orchideasalon.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "bc494a7c-cded-4efd-b30a-33cd035e93cd",
-                            RoleId = "b7fa2cc2-b102-41c1-91c0-27a5153e900a"
+                            UserId = "5d665815-5d7d-4fbf-b9ab-170039d0ac97",
+                            RoleId = "bf06e803-4e5c-41c4-a1ab-aae84d9629ca"
                         });
                 });
 
@@ -248,17 +248,17 @@ namespace orchideasalon.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bc494a7c-cded-4efd-b30a-33cd035e93cd",
+                            Id = "5d665815-5d7d-4fbf-b9ab-170039d0ac97",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "28b7c472-6698-4f4a-8bba-dfda0f3b9147",
+                            ConcurrencyStamp = "e4ac8761-48f5-4832-8487-e3dba4a21cee",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFxLtsshf8Va+Gdyq+DZ7sGRAY91TEhHqLViUhkYd4L+N8/trSN2ckr1tXgEcX9BRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMZ+9f16MM8IdLQ6t3IUCb2WsIXdtAVcDP9gWTt0MziwMpOs69IFw9+ncgHQn1Zniw==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "7099f422-9560-4c90-91b6-13b7bf6aae7d",
+                            SecurityStamp = "a6880ed0-d308-4eaa-8dc6-cd65e23b5a9a",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -270,10 +270,17 @@ namespace orchideasalon.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Approved")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -281,15 +288,10 @@ namespace orchideasalon.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<TimeOnly>("Time")
-                        .HasColumnType("time(6)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DayId");
 
                     b.HasIndex("ServiceId");
 
@@ -298,57 +300,87 @@ namespace orchideasalon.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce8466f4-fcb4-4861-b1d4-ee7e0101eabb"),
-                            DayId = 1,
+                            Id = new Guid("98123c31-d7e7-4024-937f-85660def7a5a"),
+                            Approved = true,
+                            Date = new DateTime(2024, 6, 30, 16, 30, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Соломія",
+                            Notes = "Червоний манікюр",
                             Phone = "0893943003",
-                            ServiceId = 1,
-                            Time = new TimeOnly(16, 30, 0)
+                            ServiceId = 1
                         },
                         new
                         {
-                            Id = new Guid("3fc06ba9-a9f4-4125-8078-2785c620f280"),
-                            DayId = 2,
-                            FirstName = "Соломія",
+                            Id = new Guid("f3bc0f4c-6250-4820-9b38-3d68956d7db1"),
+                            Approved = true,
+                            Date = new DateTime(2024, 2, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Орися",
+                            Notes = "",
                             Phone = "0893943003",
-                            ServiceId = 2,
-                            Time = new TimeOnly(12, 0, 0)
+                            ServiceId = 2
                         },
                         new
                         {
-                            Id = new Guid("00d43192-e4f6-4c96-a1bf-3af9ed94175b"),
-                            DayId = 3,
-                            FirstName = "Соломія",
+                            Id = new Guid("4ff62c24-3a06-451c-828e-0ebb185da286"),
+                            Approved = true,
+                            Date = new DateTime(2024, 2, 1, 13, 45, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Леся",
+                            Notes = "",
                             Phone = "0743957294",
-                            ServiceId = 3,
-                            Time = new TimeOnly(9, 30, 0)
+                            ServiceId = 3
                         },
                         new
                         {
-                            Id = new Guid("609cefb9-1902-4a6c-b201-e392f3eead36"),
-                            DayId = 4,
-                            FirstName = "Соломія",
+                            Id = new Guid("a76dce4d-4f49-4693-a485-8ab8f9357c12"),
+                            Approved = true,
+                            Date = new DateTime(2024, 6, 30, 11, 45, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Галина",
+                            Notes = "",
                             Phone = "0930943903",
-                            ServiceId = 3,
-                            Time = new TimeOnly(18, 30, 0)
+                            ServiceId = 3
                         },
                         new
                         {
-                            Id = new Guid("81576118-2449-4c76-86b3-6de2aa5e8780"),
-                            DayId = 5,
-                            FirstName = "Соломія",
+                            Id = new Guid("a609ffa0-41b3-4a4a-882e-69c360ae4939"),
+                            Approved = true,
+                            Date = new DateTime(2024, 5, 25, 12, 40, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Катерина",
+                            Notes = "",
                             Phone = "0645748392",
-                            ServiceId = 2,
-                            Time = new TimeOnly(14, 30, 0)
+                            ServiceId = 2
                         },
                         new
                         {
-                            Id = new Guid("f79ce862-8d6d-46ed-bdc3-26592d292cdd"),
-                            DayId = 3,
+                            Id = new Guid("ed61402d-6271-4d55-82fa-2c3d46f9d914"),
+                            Approved = true,
+                            Date = new DateTime(2023, 12, 27, 18, 30, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Соломія",
-                            Phone = "0545748392",
-                            ServiceId = 3,
-                            Time = new TimeOnly(13, 30, 0)
+                            Notes = "",
+                            Phone = "0735748392",
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("52236549-35e2-44db-94c4-992550385067"),
+                            Approved = false,
+                            FirstName = "Антоніна",
+                            Notes = "",
+                            Phone = "0453243545"
+                        },
+                        new
+                        {
+                            Id = new Guid("e7c4dd5e-34cc-4a35-ae7d-9b3581d18388"),
+                            Approved = false,
+                            FirstName = "Соломія",
+                            Notes = "",
+                            Phone = "0735748392"
+                        },
+                        new
+                        {
+                            Id = new Guid("383f05ae-a1b3-400a-8b2e-299e29ca2f7b"),
+                            Approved = false,
+                            FirstName = "Тетяна",
+                            Notes = "",
+                            Phone = "0973932904"
                         });
                 });
 
@@ -363,9 +395,6 @@ namespace orchideasalon.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -387,7 +416,6 @@ namespace orchideasalon.Migrations
                         {
                             Id = 1,
                             Description = "Класичний",
-                            Duration = 30,
                             Image = "https://www.amberbeautysalon.ae/cdn/shop/products/FrenchM_Image4.png",
                             Name = "Манікюр",
                             Price = 300m
@@ -396,7 +424,6 @@ namespace orchideasalon.Migrations
                         {
                             Id = 2,
                             Description = "+ укладка",
-                            Duration = 30,
                             Image = "https://images.prom.ua/3804692702_w600_h600_3804692702.jpg",
                             Name = "Стрижка жіноча",
                             Price = 600m
@@ -405,72 +432,9 @@ namespace orchideasalon.Migrations
                         {
                             Id = 3,
                             Description = "+ масаж",
-                            Duration = 30,
                             Image = "https://2.bp.blogspot.com/-2W_7I7x0dlo/UglH9g6i9rI/AAAAAAAABHc/86PYR0EBYrU/s1600/shutterstock_114182782.jpg",
                             Name = "SPA",
                             Price = 750m
-                        });
-                });
-
-            modelBuilder.Entity("orchideasalon.Models.WorkingDayModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeOnly>("BeginTime")
-                        .HasColumnType("time(6)");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Date")
-                        .IsUnique();
-
-                    b.ToTable("WorkingDays", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BeginTime = new TimeOnly(10, 0, 0),
-                            Date = new DateOnly(2024, 6, 30),
-                            EndTime = new TimeOnly(18, 0, 0)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BeginTime = new TimeOnly(11, 30, 0),
-                            Date = new DateOnly(2024, 1, 2),
-                            EndTime = new TimeOnly(15, 0, 0)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BeginTime = new TimeOnly(9, 0, 0),
-                            Date = new DateOnly(2023, 10, 25),
-                            EndTime = new TimeOnly(18, 0, 0)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BeginTime = new TimeOnly(9, 0, 0),
-                            Date = new DateOnly(2023, 12, 3),
-                            EndTime = new TimeOnly(18, 0, 0)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BeginTime = new TimeOnly(9, 0, 0),
-                            Date = new DateOnly(2024, 6, 29),
-                            EndTime = new TimeOnly(18, 0, 0)
                         });
                 });
 
@@ -527,19 +491,9 @@ namespace orchideasalon.Migrations
 
             modelBuilder.Entity("orchideasalon.Models.RegistrationModel", b =>
                 {
-                    b.HasOne("orchideasalon.Models.WorkingDayModel", "Day")
-                        .WithMany()
-                        .HasForeignKey("DayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("orchideasalon.Models.ServiceModel", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Day");
+                        .HasForeignKey("ServiceId");
 
                     b.Navigation("Service");
                 });

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<orchideasalon.Models.RegistrationModel>
 
 @{
-    ViewData["Title"] = "Оброблені записи";
+    ViewData["Title"] = "Всі записи";
 }
 
-<h2>Оброблені записи</h2>
+<h2>Всі записи</h2>
 
 <p>
     <a asp-action="Index">Оброблені записи</a>
@@ -14,12 +14,12 @@
     <a asp-action="Create">Створити</a>
 </p>
 
-<form asp-action="Index" method="get">
+<form asp-action="All" method="get">
     <div class="form-actions no-color">
         <p>
-            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Пошук" class="btn btn-default" /> |
-            <a asp-action="Index">Скинути фільтри</a>
+            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+            <input type="submit" value="Пошук" class="btn btn-default"/> |
+            <a asp-action="All">Скинути фільтри</a>
         </p>
     </div>
 </form>
@@ -40,10 +40,13 @@
             @Html.DisplayNameFor(model => model.Service)
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]">@Html.DisplayNameFor(model => model.Date)</a>
+            <a asp-action="All" asp-route-sortOrder="@ViewData["DateSortParam"]">@Html.DisplayNameFor(model => model.Date)</a>
         </th>
-<th>
+        <th>
             @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Approved)
         </th>
         <th></th>
     </tr>
@@ -69,6 +72,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @(item.Approved ? "+" : "-")
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |

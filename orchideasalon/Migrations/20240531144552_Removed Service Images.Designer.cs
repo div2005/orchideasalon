@@ -11,16 +11,16 @@ using orchideasalon.Data;
 
 namespace orchideasalon.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
-    [Migration("20240526082528_Initial")]
-    partial class Initial
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20240531144552_Removed Service Images")]
+    partial class RemovedServiceImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -49,6 +49,20 @@ namespace orchideasalon.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b8db1623-f33e-4513-be90-b07eb80cc29a",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = "a33ae0dc-1ebc-4e97-915e-ac2c43d5bd7e",
+                            Name = "manager",
+                            NormalizedName = "manager"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -138,6 +152,13 @@ namespace orchideasalon.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e0c1bf77-5048-4c66-a481-b9f7510ca792",
+                            RoleId = "b8db1623-f33e-4513-be90-b07eb80cc29a"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -223,6 +244,24 @@ namespace orchideasalon.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e0c1bf77-5048-4c66-a481-b9f7510ca792",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "45bfd88f-47f9-43ff-9f3b-ee05ea8bb258",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHHQlHUrymwC0EK9kfRFwNDKGKqCnCKYoiIQQ4JIY+r4Fr+xaWyOMZGT/ySIxgBzeg==",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "9de4d3b5-f70a-4852-8fb3-15bb702a91ab",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        });
                 });
 
             modelBuilder.Entity("orchideasalon.Models.RegistrationModel", b =>
@@ -231,10 +270,17 @@ namespace orchideasalon.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Approved")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -242,19 +288,100 @@ namespace orchideasalon.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ServiceIdId")
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
-
-                    b.Property<TimeOnly>("Time")
-                        .HasColumnType("time(6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DayId");
-
-                    b.HasIndex("ServiceIdId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Registrations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8dce186e-7f0a-4393-a98f-b00416cbc550"),
+                            Approved = true,
+                            Date = new DateTime(2024, 6, 30, 16, 30, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Соломія",
+                            Notes = "Червоний манікюр",
+                            Phone = "0893943003",
+                            ServiceId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("1603352b-9a02-4f60-93cb-c02ab5f847f1"),
+                            Approved = true,
+                            Date = new DateTime(2024, 2, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Орися",
+                            Notes = "",
+                            Phone = "0893943003",
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("bab62061-1b56-4deb-83f1-ede3235ab24f"),
+                            Approved = true,
+                            Date = new DateTime(2024, 2, 1, 13, 45, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Леся",
+                            Notes = "",
+                            Phone = "0743957294",
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("75fe90fa-96ee-46c1-8441-8091ad6d7efb"),
+                            Approved = true,
+                            Date = new DateTime(2024, 6, 30, 11, 45, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Галина",
+                            Notes = "",
+                            Phone = "0930943903",
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("ad85f26c-e9c0-4f77-8e4a-89dd4330112f"),
+                            Approved = true,
+                            Date = new DateTime(2024, 5, 25, 12, 40, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Катерина",
+                            Notes = "",
+                            Phone = "0645748392",
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("d7f7ad9b-cc24-4eee-a816-4c2158ddb7ad"),
+                            Approved = true,
+                            Date = new DateTime(2023, 12, 27, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Соломія",
+                            Notes = "",
+                            Phone = "0735748392",
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("29845d38-5d1f-426a-bfc3-8064416d6c57"),
+                            Approved = false,
+                            FirstName = "Антоніна",
+                            Notes = "",
+                            Phone = "0453243545"
+                        },
+                        new
+                        {
+                            Id = new Guid("36f8d1db-d5d0-411e-8c1a-4e20eac15177"),
+                            Approved = false,
+                            FirstName = "Соломія",
+                            Notes = "",
+                            Phone = "0735748392"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2eb6302-dee8-4c76-9153-ccbcadf03b2d"),
+                            Approved = false,
+                            FirstName = "Тетяна",
+                            Notes = "",
+                            Phone = "0973932904"
+                        });
                 });
 
             modelBuilder.Entity("orchideasalon.Models.ServiceModel", b =>
@@ -269,13 +396,6 @@ namespace orchideasalon.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -286,31 +406,29 @@ namespace orchideasalon.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Services", (string)null);
-                });
 
-            modelBuilder.Entity("orchideasalon.Models.WorkingDayModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeOnly>("BeginTime")
-                        .HasColumnType("time(6)");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Date")
-                        .IsUnique();
-
-                    b.ToTable("WorkingDays", (string)null);
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Класичний",
+                            Name = "Манікюр",
+                            Price = 300m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "+ укладка",
+                            Name = "Стрижка жіноча",
+                            Price = 600m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "+ масаж",
+                            Name = "SPA",
+                            Price = 750m
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -366,21 +484,11 @@ namespace orchideasalon.Migrations
 
             modelBuilder.Entity("orchideasalon.Models.RegistrationModel", b =>
                 {
-                    b.HasOne("orchideasalon.Models.WorkingDayModel", "Day")
+                    b.HasOne("orchideasalon.Models.ServiceModel", "Service")
                         .WithMany()
-                        .HasForeignKey("DayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ServiceId");
 
-                    b.HasOne("orchideasalon.Models.ServiceModel", "ServiceId")
-                        .WithMany()
-                        .HasForeignKey("ServiceIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Day");
-
-                    b.Navigation("ServiceId");
+                    b.Navigation("Service");
                 });
 #pragma warning restore 612, 618
         }

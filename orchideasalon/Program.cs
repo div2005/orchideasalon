@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using orchideasalon.Controllers;
 using orchideasalon.Areas.Identity.Data;
@@ -14,10 +15,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // builder.Services.AddDbContext<ApplicationDbContext>(options => 
 //     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddDbContext<AuthDbContext>(options => 
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<AuthDbContext>();
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 var app = builder.Build();
@@ -40,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

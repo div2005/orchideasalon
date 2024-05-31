@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<orchideasalon.Models.RegistrationModel>
 
 @{
-    ViewData["Title"] = "Оброблені записи";
+    ViewData["Title"] = "Записи в обробці";
 }
 
-<h2>Оброблені записи</h2>
+<h2>Записи в обробці</h2>
 
 <p>
     <a asp-action="Index">Оброблені записи</a>
@@ -12,14 +12,15 @@
     <a asp-action="Archive">Архів</a>
     <a asp-action="All">Всі записи</a>
     <a asp-action="Create">Створити</a>
+
 </p>
 
-<form asp-action="Index" method="get">
+<form asp-action="InProcessing" method="get">
     <div class="form-actions no-color">
         <p>
-            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Пошук" class="btn btn-default" /> |
-            <a asp-action="Index">Скинути фільтри</a>
+            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+            <input type="submit" value="Пошук" class="btn btn-default"/> |
+            <a asp-action="InProcessing">Скинути фільтри</a>
         </p>
     </div>
 </form>
@@ -36,15 +37,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Phone)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Service)
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]">@Html.DisplayNameFor(model => model.Date)</a>
-        </th>
-<th>
-            @Html.DisplayNameFor(model => model.Notes)
-        </th>
         <th></th>
     </tr>
     </thead>
@@ -60,15 +52,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Service.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |

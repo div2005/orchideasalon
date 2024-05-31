@@ -14,21 +14,22 @@ public class RegistrationModel
     public string ShortId => Id.ToString()[..8];
 
     [DisplayName("Послуга")]
-    public virtual ServiceModel Service { get; set; }
+    public ServiceModel? Service { get; set; }
     
-    public int ServiceId { get; set; }
+    public int? ServiceId { get; set; }
     
     [DisplayName("Ім'я")]
     public string FirstName { get; set; } = "";
     
     [DisplayName("Номер телефону")]
     public string Phone { get; set; } = "";
+
+    [DisplayName("Дaта")] 
+    public DateTime? Date { get; set; }
     
-    [DisplayName("День")]
-    public virtual WorkingDayModel Day { get; set; }
-    
-    public int DayId { get; set; }
-    
-    [DisplayName("Час")]
-    public TimeOnly Time { get; set; }
+    [DisplayName("Нотатки")]
+    public string Notes { get; set; } = "";
+
+    [DisplayName("Підтверджено")] 
+    public bool Approved { get; set; } = false;
 }
