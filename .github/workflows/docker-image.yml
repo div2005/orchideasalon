@@ -53,10 +53,6 @@ jobs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      
-    - 
-      name: Build the Docker image
-      run: docker build ./orchideasalon --file Dockerfile --tag orchideasalon:$(date +%s)
 
     -
       name: Build and push
