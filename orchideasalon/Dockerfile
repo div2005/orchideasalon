@@ -13,4 +13,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 EXPOSE 8080
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["./"]
+ENTRYPOINT ["dotnet", "orchideasalon.dll"]
