@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["orchideasalon/orchideasalon.csproj", "orchideasalon/"]
-RUN dotnet restore "orchideasalon/orchideasalon.csproj"
+RUN dotnet restore
 COPY . .
 WORKDIR "/src/orchideasalon"
 RUN dotnet build "orchideasalon.csproj" -c Release -o /app/build
